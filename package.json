@@ -1,0 +1,27 @@
+{
+  "name": "solr-app",
+  "version": "1.0.0",
+  "description": "Knowledge management portal",
+  "main": "main.js",
+  "scripts": {
+    "test": "mocha ./",
+    "start":"electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cc5tudio/solr-app.git"
+  },
+  "keywords": [
+    "solr",
+    "electron"
+  ],
+  "author": "Charles Campbell",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cc5tudio/solr-app/issues"
+  },
+  "homepage": "https://github.com/cc5tudio/solr-app#readme",
+  "dependencies": {
+    "electron": "^1.7.9"
+  }
+}
