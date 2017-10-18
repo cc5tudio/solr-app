@@ -1,1 +1,1 @@
-# solr-app
+# solr-electron-app
