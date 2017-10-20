@@ -1,11 +1,11 @@
 {
-  "name": "solr-app",
+  "name": "solr-electron-app",
   "version": "1.0.0",
   "description": "Knowledge management portal",
   "main": "main.js",
   "scripts": {
     "test": "mocha ./",
-    "start":"electron ."
+    "start": "electron ."
   },
   "repository": {
     "type": "git",
