@@ -7,7 +7,7 @@ requirejs.config({
     widgets: '../lib/ajax-solr/widgets',
     reuters: '../lib/ajax-solr/examples/reuters-requirejs/widgets'
   },
-  urlArgs: "bust=" +  (new Date()).getTime()
+ // urlArgs: "bust=" +  (new Date()).getTime()
 });
 
 (function ($) {
@@ -17,6 +17,7 @@ define([
   'core/ParameterStore',
   'reuters/ResultWidget',
   'reuters/TagcloudWidget',
+  'reuters/ServiceAreaWidget',
   'reuters/CurrentSearchWidget.9',
   'reuters/AutocompleteWidget',
   'reuters/CountryCodeWidget',
@@ -26,11 +27,13 @@ define([
   $(function () {
     Manager = new AjaxSolr.Manager({
       solrUrl: 'http://localhost:8983/solr/Documents/'
+        //solrUrl: 'http://ec2-34-205-225-171.compute-1.amazonaws.com/solr/Proposals'
     });
 
     Manager.addWidget(new AjaxSolr.ResultWidget({
       id: 'result',
-      target: '#docs'
+      target: '#docs',
+      protocol: 'file'
     }));
 
     Manager.addWidget(new AjaxSolr.PagerWidget({
@@ -44,7 +47,7 @@ define([
       }
     }));
 
-    var fields = [ 'topics', 'organisations', 'exchanges' ];
+    var fields = [ 'keywords_exact', 'service_areas_exact', 'agencies', 'author' ];
     for (var i = 0, l = fields.length; i < l; i++) {
       Manager.addWidget(new AjaxSolr.TagcloudWidget({
         id: fields[i],
@@ -70,20 +73,26 @@ define([
       field: 'countryCodes'
     }));
 
-    Manager.addWidget(new AjaxSolr.CalendarWidget({
+    /*Manager.addWidget(new AjaxSolr.CalendarWidget({
       id: 'calendar',
       target: '#calendar',
       field: 'date'
+    }));*/
+
+    Manager.addWidget(new AjaxSolr.ServiceAreaWidget({
+        id: 'service_areas',
+        target: '#service_areas',
+        field: 'service_area_descendent_path'
     }));
 
     Manager.init();
     Manager.store.addByValue('q', '*:*');
     var params = {
       facet: true,
-      //'facet.field': [ 'topics', 'organisations', 'exchanges', 'countryCodes' ],
+      'facet.field': [ 'keywords_exact', 'service_area_descendent_path', 'author','date' ],
       'facet.limit': 20,
       'facet.mincount': 1,
-      'f.topics.facet.limit': 50,
+      'f.keywords.facet.limit': 50,
       'f.countryCodes.facet.limit': -1,
       'facet.date': 'date',
       'facet.date.start': '2000-01-01T00:00:00.000Z/DAY',
